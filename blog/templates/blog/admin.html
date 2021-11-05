@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    {% for core in post_list %}
+    <a href="{% url 'blog:add' %}">Add new Post</a>
+    <div>
+      <h2>{{ core.title }}</h2>
+      <a href="{% url 'blog:single' core.id%}"">View</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

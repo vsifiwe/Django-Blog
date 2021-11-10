@@ -6,9 +6,13 @@ class Article(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     author = models.CharField(max_length=100)
+    # Add an image field
 
     def __str__(self):
         return self.title + ' by ' + self.author
+
+    class Meta:
+        ordering = ['-id']
 
 
 class Comment(models.Model):

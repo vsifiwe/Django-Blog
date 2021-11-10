@@ -1,10 +1,29 @@
-{% extends 'blog/base.html' %} {% block content %}
+{% extends 'blog/base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}" />
 <div class="container">
   <div class="row">
     {% for core in object_list %}
-    <div>
-      <h3><a href="{% url 'blog:single' core.id%}"">{{ core.title }}</a></h3>
-      <p>{{ core.content }}</p>
+
+    <div class="blog-card">
+      <div class="meta">
+        <div
+          class="photo"
+          style="
+            background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg);
+          "
+        ></div>
+        <ul class="details">
+          <li class="author">{{core.author}}</li>
+          <li class="date">Aug. 24, 2015</li>
+        </ul>
+      </div>
+      <div class="description">
+        <h1>{{core.title}}</h1>
+        <p>{{core.content}}</p>
+        <p class="read-more">
+          <a href="{% url 'blog:single' core.id%}">Read More</a>
+        </p>
+      </div>
     </div>
     {% endfor %}
   </div>

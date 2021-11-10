@@ -1,11 +1,18 @@
 {% extends 'blog/base.html' %} {% block content %}
 <div class="container">
   <div class="row">
-    {% for core in post_list %}
     <a href="{% url 'blog:add' %}">Add new Post</a>
+    {% for blog in post_list %}
+
     <div>
-      <h2>{{ core.title }}</h2>
-      <a href="{% url 'blog:single' core.id%}"">View</a>
+      <h2>{{ blog.title }}</h2>
+      <a href="{% url 'blog:single' blog.id %}" class="btn btn-success">View</a>
+      <a href="{% url 'blog:edit' blog.id %}" class="btn btn-outline-warning"
+        >Edit</a
+      >
+      <a href="{% url 'blog:delete' blog.id %}" class="btn btn-danger"
+        >Delete</a
+      >
     </div>
     {% endfor %}
   </div>

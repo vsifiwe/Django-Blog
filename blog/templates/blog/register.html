@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %} {% load widget_tweaks %} {% block content %}
+<form action="" method="post" class="container">
+  {% csrf_token %} {%for field in form.visible_fields%}
+  <div class="form-group col-4">
+    <label for="{{field.id_for_label}}">{{field.label}} </label>
+    {{ field|add_class:'form-control'}} {%for error in field.errors%}
+    <span class="help-block">{{error}}</span>
+    {%endfor%}
+  </div>
+  {%endfor%}
+  <button type="submit" class="btn btn-success mt-4">Register</button>
+</form>
+{% endblock %}

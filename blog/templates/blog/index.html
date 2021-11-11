@@ -2,14 +2,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'blog/index.css' %}" />
 <div class="container">
   <div class="row">
-    {% for core in object_list %}
+    {% for core in data %}
 
     <div class="blog-card">
       <div class="meta">
         <div
           class="photo"
           style="
-            background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg);
+            background-image: url({{core.img.url}});
           "
         ></div>
         <ul class="details">

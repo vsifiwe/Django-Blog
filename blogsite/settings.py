@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+# import django_heroku
 from pathlib import Path
 import os
 
@@ -94,13 +94,16 @@ WSGI_APPLICATION = 'blogsite.wsgi.application'
 #     }
 # }
 
+
+# HEROKU POSTGRES
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ivtlrydb',
-        'USER': 'ivtlrydb',
-        'PASSWORD': 'k8qiLWxkg3rJP6mfl0K3NIIdDcwD06UZ',
-        'HOST': 'fanny.db.elephantsql.com',
+        'NAME': 'd3udpmfh0n81oo',
+        'USER': 'pgztjcpxyczidi',
+        'PASSWORD': 'a5a8265e42618b1fb4b1e0ba83be10e04e344275b9b1621ff31def3b99204bff',
+        'HOST': 'ec2-107-22-18-26.compute-1.amazonaws.com',
+        'PORT': '5432'
     }
 }
 

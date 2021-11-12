@@ -36,16 +36,21 @@
           >Home</a
         >
       </li>
+      {% if request.user.is_authenticated %}
       <li>
         <a href="{% url 'blog:admin' %}" class="nav-link px-2 link-dark"
-          >Features</a
+          >Dashboard</a
         >
       </li>
-      <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-      <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-      <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+      <li>
+        <a href="{% url 'blog:add' %}" class="nav-link px-2 link-dark"
+          >Add New</a
+        >
+      </li>
+      {%endif%}
     </ul>
     {% if request.user.is_authenticated %}
+
     <div class="col-md-3 text-end">
       <a href="{% url 'blog:admin' %}" class="btn btn-outline-primary me-2"
         >Dashboard</a

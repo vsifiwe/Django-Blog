@@ -20,14 +20,21 @@
     </div>
   </div>
 
-  <div class="blog-footer">
+  <div class="container mx-5">
     <h2>Comments</h2>
     {% if not post.comment_set.all %}
-    <h2>No comments yet</h2>
+    <p class="lead text-muted">No comments yet</p>
 
-    {% else %} {% for comment in post.comment_set.all %}
-    <h4>{{comment.comment}}</h4>
-    {% endfor %} {%endif%}
+    
+      
+    
+    {% else %} 
+    <ul></ul>
+    {% for comment in post.comment_set.all %}
+    <li class="lead"><small>{{comment.comment}}</small></li>
+    {% endfor %} 
+  </ul>
+    {%endif%}
   </div>
 
   <form action="" , method="post" class="m-5">

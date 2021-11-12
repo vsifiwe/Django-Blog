@@ -19,7 +19,7 @@
       </div>
       <div class="description">
         <h1>{{core.title}}</h1>
-        <p>{{core.content}}</p>
+        <p>{{core.content|truncatechars:32}}</p>
         <p class="read-more">
           <a href="{% url 'blog:single' core.id%}">Read More</a>
         </p>

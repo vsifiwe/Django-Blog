@@ -8,7 +8,8 @@ class Article(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=CASCADE)
-    img = models.FileField(upload_to='media')
+    img = models.FileField(
+        upload_to='media', default='../static/blog/logo.png')
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

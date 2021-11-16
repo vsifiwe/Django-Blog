@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'blogsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
@@ -97,16 +97,16 @@ DATABASES = {
 
 
 # HEROKU POSTGRES
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd3udpmfh0n81oo',
-#         'USER': 'pgztjcpxyczidi',
-#         'PASSWORD': 'a5a8265e42618b1fb4b1e0ba83be10e04e344275b9b1621ff31def3b99204bff',
-#         'HOST': 'ec2-107-22-18-26.compute-1.amazonaws.com',
-#         'PORT': '5432'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3udpmfh0n81oo',
+        'USER': 'pgztjcpxyczidi',
+        'PASSWORD': 'a5a8265e42618b1fb4b1e0ba83be10e04e344275b9b1621ff31def3b99204bff',
+        'HOST': 'ec2-107-22-18-26.compute-1.amazonaws.com',
+        'PORT': '5432'
+    }
+}
 
 
 # Password validation

@@ -109,20 +109,18 @@ def deleteArticle(request, pk):
 
 
 def viewReplies(request, pk):
-    replyForm = ReplyForm()
+    replyForm = ReplyForm(request.POST or None)
     comment = get_object_or_404(Comment, id=pk)
 
-    if request.method == 'POST':
-        replyForm = ReplyForm(request.POST)
 
-        if replyForm.is_valid():
-            reply = replyForm.save(commit=False)
-            if request.user.is_authenticated:
-                reply.author = request.user
-            reply.comment = comment
-            reply.save()
-            replyForm = ReplyForm()
-            # return redirect('blog:comment', pk=pk)
+    if replyForm.is_valid():
+        reply = replyForm.save(commit=False)
+        if request.user.is_authenticated:
+            reply.author = request.user
+        reply.comment = comment
+        reply.save()
+        replyForm = ReplyForm()
+        # return redirect('blog:comment', pk=pk)
 
     data = comment.reply_set.all
 

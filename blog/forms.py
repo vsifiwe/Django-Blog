@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Article, Comment
+from .models import Article, Comment, Reply
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -25,3 +25,9 @@ class ArticleForm(ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'content', 'img']
+
+
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['reply']

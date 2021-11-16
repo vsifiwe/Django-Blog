@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %} {% load widget_tweaks %} {% block content %}
+
+<div class="container">
+  {% if not data %}
+  <h2>No replies on this comment. Be the first one to reply</h2>
+  {% endif %} {% for reply in data %}
+  <h2>{{reply}} by {{reply.author}}</h2>
+  {% endfor %}
+
+  <form action="" method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="Reply" class="btn btn-primary" />
+  </form>
+</div>
+
+{% endblock %}

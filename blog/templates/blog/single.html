@@ -31,7 +31,14 @@
     {% else %} 
     <ul></ul>
     {% for comment in post.comment_set.all %}
-    <li class="lead"><small>{{comment.comment}}</small></li>
+    <li class="lead"><small>{{comment.comment}}</small> by 
+      {% if comment.author is None %}
+      Anonymous
+      {% else %}
+      {{comment.author}}
+      {% endif %}
+
+      <a href="{% url 'blog:reply' comment.id %}">View {{comment.reply_set.all|length}} replies</a></li>
     {% endfor %} 
   </ul>
     {%endif%}

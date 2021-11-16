@@ -2,7 +2,7 @@ from django.http import request
 from .models import Article, Comment
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .forms import CommentForm, CreateUserForm, ArticleForm
+from .forms import CommentForm, CreateUserForm, ArticleForm, ReplyForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -27,6 +27,9 @@ def singleArticle(request, id):
         commentForm = CommentForm(request.POST)
         if commentForm.is_valid():
             post = commentForm.save(commit=False)
+            if request.user.is_authenticated:
+                post.author = request.user
+            
             post.article = data
             post.save()
             commentForm = CommentForm()
@@ -105,22 +108,30 @@ def deleteArticle(request, pk):
     return render(request, 'blog/confirm-delete.html', context)
 
 
-class DeleteArticleView(DeleteView):
-    model = Article
-    template_name = 'blog/confirm-delete.html'
-    pk_url_kwargs = 'pk'
-    success_url = reverse_lazy('blog:admin')
+def viewReplies(request, pk):
+    replyForm = ReplyForm()
+    comment = get_object_or_404(Comment, id=pk)
 
+    if request.method == 'POST':
+        replyForm = ReplyForm(request.POST)
 
-class AddComment(CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'blog/add_comment.html'
-    success_url = reverse_lazy('blog:index')
+        if replyForm.is_valid():
+            reply = replyForm.save(commit=False)
+            if request.user.is_authenticated:
+                reply.author = request.user
+            reply.comment = comment
+            reply.save()
+            replyForm = ReplyForm()
+            # return redirect('blog:comment', pk=pk)
 
-    def form_valid(self, form):
-        form.instance.article_id = self.kwargs['pk']
-        return super().form_valid(form)
+    data = comment.reply_set.all
+
+    context = {
+        'data': data,
+        'form': replyForm
+    }
+
+    return render(request, 'blog/reply.html', context)
 
 
 def User_Register(request):

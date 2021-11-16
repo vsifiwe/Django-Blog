@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 
 class Article(models.Model):
@@ -20,8 +19,18 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=CASCADE, null=True)
     article = models.ForeignKey(Article, on_delete=CASCADE)
     comment = models.CharField(max_length=100)
 
     def __str__(self):
         return self.comment
+
+
+class Reply(models.Model):
+    author = models.ForeignKey(User, on_delete=CASCADE, null=True)
+    comment = models.ForeignKey(Comment, on_delete=CASCADE)
+    reply = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.reply

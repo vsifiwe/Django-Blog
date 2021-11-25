@@ -7,6 +7,27 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .serializers import ArticleSerializer, ArticleCreateSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.generics import(
+    RetrieveUpdateDestroyAPIView,
+    ListCreateAPIView,
+    ListAPIView,
+    CreateAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    DestroyAPIView
+)
+
+from rest_framework.filters import (
+    SearchFilter,
+    OrderingFilter,
+)
+from rest_framework.permissions import (
+    IsAuthenticated, IsAuthenticatedOrReadOnly)
 
 
 def index_View(request):
@@ -29,7 +50,7 @@ def singleArticle(request, id):
             post = commentForm.save(commit=False)
             if request.user.is_authenticated:
                 post.author = request.user
-            
+
             post.article = data
             post.save()
             commentForm = CommentForm()
@@ -40,7 +61,7 @@ def singleArticle(request, id):
     return render(request, 'blog/single.html', context)
 
 
-@login_required(login_url='blog:login')
+@login_required()
 def Admin_View(request):
     post_list = Article.objects.all()
     context = {
@@ -112,7 +133,6 @@ def viewReplies(request, pk):
     replyForm = ReplyForm(request.POST or None)
     comment = get_object_or_404(Comment, id=pk)
 
-
     if replyForm.is_valid():
         reply = replyForm.save(commit=False)
         if request.user.is_authenticated:
@@ -166,3 +186,51 @@ def Logout_User(request):
 
     logout(request)
     return redirect('blog:index')
+
+
+class ArticleListAPIView(ListAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['title', 'content']
+
+
+class ArticleCreateAPIView(CreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class ArticleDetailAPIView(RetrieveAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'pk'
+
+
+class TaskUpdateAPIView(RetrieveUpdateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'pk'
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
+class TaskDeleteAPIView(DestroyAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'pk'
+
+
+# class ArticleList(ListCreateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+
+
+# class ArticleDetail(RetrieveUpdateDestroyAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer

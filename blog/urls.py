@@ -14,5 +14,8 @@ urlpatterns = [
     path('register/', views.User_Register, name='register'),
     path('login/', views.Login_User, name='login'),
     path('logout/', views.Logout_User, name='logout'),
-    path('reply/<int:pk>/', views.viewReplies, name='reply')
+    path('reply/<int:pk>/', views.viewReplies, name='reply'),
+    path('list/', views.ArticleListAPIView.as_view(), name='blog-list'),
+    path('list/create/', views.ArticleCreateAPIView.as_view(), name='blog-create'),
+    path('list/<int:pk>/', views.ArticleDetailAPIView.as_view(), name='blog-detail')
 ]
